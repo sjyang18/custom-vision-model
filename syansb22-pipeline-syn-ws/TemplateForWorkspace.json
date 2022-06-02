@@ -1924,8 +1924,7 @@
 						"defaultValue": "rawdataro3ldo"
 					},
 					"StorageAccountKey": {
-						"type": "string",
-						"defaultValue": "hRZfFiU8tMORLcur2KpZvhz/DGMQfx9KhvUV+pSWAfc0whUdlqLIcwkq2qk4YyRjBBZ6UbP6u/Vh+AStevhX1A=="
+						"type": "string"
 					},
 					"PersistentVolumeClaim": {
 						"type": "string",
