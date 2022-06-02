@@ -1916,13 +1916,16 @@
 				},
 				"parameters": {
 					"Prefix": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "testme"
 					},
 					"StorageAccountName": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "rawdataro3ldo"
 					},
 					"StorageAccountKey": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "hRZfFiU8tMORLcur2KpZvhz/DGMQfx9KhvUV+pSWAfc0whUdlqLIcwkq2qk4YyRjBBZ6UbP6u/Vh+AStevhX1A=="
 					},
 					"PersistentVolumeClaim": {
 						"type": "string",
