@@ -2,14 +2,14 @@
     "name": "Mosaic",
     "properties": {
         "targetBigDataPool": {
-            "referenceName": "poolwxrp6t",
+            "referenceName": "poolede6nx",
             "type": "BigDataPoolReference"
         },
         "requiredSparkVersion": "3.1",
         "language": "python",
         "jobProperties": {
             "name": "Mosaic",
-            "file": "abfss://spark-jobs@synhnswxrp6t.dfs.core.windows.net/raster_mosaic/src/mosaic.py",
+            "file": "abfss://spark-jobs@synhnsede6nx.dfs.core.windows.net/raster_mosaic/src/mosaic.py",
             "conf": {
                 "spark.dynamicAllocation.enabled": "false",
                 "spark.dynamicAllocation.minExecutors": "3",

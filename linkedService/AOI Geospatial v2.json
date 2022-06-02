@@ -5,7 +5,7 @@
         "annotations": [],
         "type": "AzureBlobFS",
         "typeProperties": {
-            "url": "https://rawdatacpwo66.dfs.core.windows.net"
+            "url": "https://rawdataro3ldo.dfs.core.windows.net"
         },
         "connectVia": {
             "referenceName": "AutoResolveIntegrationRuntime",
