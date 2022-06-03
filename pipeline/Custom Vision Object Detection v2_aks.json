@@ -3,160 +3,6 @@
     "properties": {
         "activities": [
             {
-                "name": "Wait for Custom Vision",
-                "type": "Until",
-                "dependsOn": [
-                    {
-                        "activity": "Custom Vision",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "userProperties": [],
-                "typeProperties": {
-                    "expression": {
-                        "value": "@and(and(not(equals(string(variables('FunctionCompleted')), 'running')), not(equals(string(variables('FunctionCompleted')), 'active'))), not(equals(string(variables('FunctionCompleted')), 'preparing')))",
-                        "type": "Expression"
-                    },
-                    "activities": [
-                        {
-                            "name": "Wait for Custom Vision Check",
-                            "type": "Wait",
-                            "dependsOn": [
-                                {
-                                    "activity": "Set FunctionCompleted Custom Vision",
-                                    "dependencyConditions": [
-                                        "Succeeded"
-                                    ]
-                                }
-                            ],
-                            "userProperties": [],
-                            "typeProperties": {
-                                "waitTimeInSeconds": 30
-                            }
-                        },
-                        {
-                            "name": "Check Status Custom Vision",
-                            "type": "WebActivity",
-                            "dependsOn": [],
-                            "policy": {
-                                "timeout": "7.00:00:00",
-                                "retry": 0,
-                                "retryIntervalInSeconds": 30,
-                                "secureOutput": false,
-                                "secureInput": false
-                            },
-                            "userProperties": [],
-                            "typeProperties": {
-                                "url": {
-                                    "value": "@concat('https://',pipeline().parameters.BatchName,'.',pipeline().parameters.BatchLocation,'.batch.azure.com/jobs/',pipeline().parameters.JobName,'/tasks/aoi-cv-task-', pipeline().RunId, '?api-version=2022-01-01.15.0')",
-                                    "type": "Expression"
-                                },
-                                "connectVia": {
-                                    "referenceName": "AutoResolveIntegrationRuntime",
-                                    "type": "IntegrationRuntimeReference"
-                                },
-                                "method": "GET",
-                                "authentication": {
-                                    "type": "MSI",
-                                    "resource": "https://batch.core.windows.net/"
-                                }
-                            }
-                        },
-                        {
-                            "name": "Set FunctionCompleted Custom Vision",
-                            "type": "SetVariable",
-                            "dependsOn": [
-                                {
-                                    "activity": "Check Status Custom Vision",
-                                    "dependencyConditions": [
-                                        "Succeeded"
-                                    ]
-                                }
-                            ],
-                            "userProperties": [],
-                            "typeProperties": {
-                                "variableName": "FunctionCompleted",
-                                "value": {
-                                    "value": "@activity('Check Status Custom Vision').output['state']",
-                                    "type": "Expression"
-                                }
-                            }
-                        },
-                        {
-                            "name": "Set FunctionError",
-                            "type": "SetVariable",
-                            "dependsOn": [
-                                {
-                                    "activity": "Check Status Custom Vision",
-                                    "dependencyConditions": [
-                                        "Failed"
-                                    ]
-                                }
-                            ],
-                            "userProperties": [],
-                            "typeProperties": {
-                                "variableName": "FunctionError",
-                                "value": {
-                                    "value": "@activity('Check Status Custom Vision').output['executionInfo']['failureInfo']",
-                                    "type": "Expression"
-                                }
-                            }
-                        }
-                    ],
-                    "timeout": "7.00:00:00"
-                }
-            },
-            {
-                "name": "Custom Vision",
-                "type": "WebActivity",
-                "dependsOn": [
-                    {
-                        "activity": "Copy Config file",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    },
-                    {
-                        "activity": "Copy Xml From Convert Transform",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "timeout": "7.00:00:00",
-                    "retry": 0,
-                    "retryIntervalInSeconds": 30,
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "url": {
-                        "value": "@concat('https://',pipeline().parameters.BatchName,'.',pipeline().parameters.BatchLocation,'.batch.azure.com/jobs/',pipeline().parameters.JobName,'/tasks?api-version=2020-03-01.11.0')",
-                        "type": "Expression"
-                    },
-                    "connectVia": {
-                        "referenceName": "AutoResolveIntegrationRuntime",
-                        "type": "IntegrationRuntimeReference"
-                    },
-                    "method": "POST",
-                    "headers": {
-                        "Content-type": "application/json; odata=minimalmetadata; charset=utf-8"
-                    },
-                    "body": {
-                        "value": "@json(concat('{\n  \"id\": \"aoi-cv-task-', pipeline().RunId, '\",\n  \"commandLine\": \"\",\n  \"containerSettings\": {\n    \"imageName\": \"', activity('Read Spec Document').output['runStatus'].output.sink.value[0]['algImageName'], '\",\n    \"containerRunOptions\": \"--rm --workdir / -v /mnt/batch/tasks/fsmounts/S/', pipeline().parameters.Prefix, ':', activity('Read Spec Document').output['runStatus'].output.sink.value[0]['mountedDirectory'], '\"\n  },\n  \"environmentSettings\": [\n      {\n          \"name\": \"APP_INPUT_DIR\",\n          \"value\": \"/mnt/batch/tasks/fsmounts/S/', pipeline().parameters.Prefix,'/', activity('Read Spec Document').output['runStatus'].output.sink.value[0]['submissionDirectory'],'\"\n      },\n      {\n          \"name\": \"APP_OUTPUT_DIR\",\n          \"value\": \"/mnt/batch/tasks/fsmounts/S/', pipeline().parameters.Prefix,'/', activity('Read Spec Document').output['runStatus'].output.sink.value[0]['resultsDirectory'],'\"\n      },\n      {\n          \"name\": \"APP_CONFIG_DIR\",\n          \"value\": \"/mnt/batch/tasks/fsmounts/S/', pipeline().parameters.Prefix,'/', activity('Read Spec Document').output['runStatus'].output.sink.value[0]['contextFileName'],'\"\n      }\n  ]\n}'))",
-                        "type": "Expression"
-                    },
-                    "authentication": {
-                        "type": "MSI",
-                        "resource": "https://batch.core.windows.net/"
-                    }
-                }
-            },
-            {
                 "name": "Pool Geolocation",
                 "type": "SparkJob",
                 "dependsOn": [
@@ -339,7 +185,7 @@
                 "type": "Copy",
                 "dependsOn": [
                     {
-                        "activity": "Wait for Custom Vision",
+                        "activity": "Until1",
                         "dependencyConditions": [
                             "Succeeded"
                         ]
@@ -403,7 +249,7 @@
                 "type": "Copy",
                 "dependsOn": [
                     {
-                        "activity": "Wait for Custom Vision",
+                        "activity": "Until1",
                         "dependencyConditions": [
                             "Succeeded"
                         ]
@@ -779,12 +625,6 @@
             }
         },
         "variables": {
-            "FunctionCompleted": {
-                "type": "String"
-            },
-            "FunctionError": {
-                "type": "String"
-            },
             "KubeTaskJob": {
                 "type": "String"
             },
