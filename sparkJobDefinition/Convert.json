@@ -2,14 +2,14 @@
     "name": "Convert",
     "properties": {
         "targetBigDataPool": {
-            "referenceName": "poolede6nx",
+            "referenceName": "pool5trgtn",
             "type": "BigDataPoolReference"
         },
         "requiredSparkVersion": "3.1",
         "language": "python",
         "jobProperties": {
             "name": "Convert",
-            "file": "abfss://spark-jobs@synhnsede6nx.dfs.core.windows.net/raster_convert/src/convert.py",
+            "file": "abfss://spark-jobs@synhns5trgtn.dfs.core.windows.net/raster_convert/src/convert.py",
             "conf": {
                 "spark.dynamicAllocation.enabled": "false",
                 "spark.dynamicAllocation.minExecutors": "1",

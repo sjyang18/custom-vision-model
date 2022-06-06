@@ -2,14 +2,14 @@
     "name": "Warp",
     "properties": {
         "targetBigDataPool": {
-            "referenceName": "poolede6nx",
+            "referenceName": "pool5trgtn",
             "type": "BigDataPoolReference"
         },
         "requiredSparkVersion": "3.1",
         "language": "python",
         "jobProperties": {
             "name": "Warp",
-            "file": "abfss://spark-jobs@synhnsede6nx.dfs.core.windows.net/raster_warp/src/warp.py",
+            "file": "abfss://spark-jobs@synhns5trgtn.dfs.core.windows.net/raster_warp/src/warp.py",
             "conf": {
                 "spark.dynamicAllocation.enabled": "false",
                 "spark.dynamicAllocation.minExecutors": "3",

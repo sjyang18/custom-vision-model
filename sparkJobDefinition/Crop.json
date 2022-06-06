@@ -2,14 +2,14 @@
     "name": "Crop",
     "properties": {
         "targetBigDataPool": {
-            "referenceName": "poolede6nx",
+            "referenceName": "pool5trgtn",
             "type": "BigDataPoolReference"
         },
         "requiredSparkVersion": "3.1",
         "language": "python",
         "jobProperties": {
             "name": "Crop",
-            "file": "abfss://spark-jobs@synhnsede6nx.dfs.core.windows.net/raster_crop/src/crop.py",
+            "file": "abfss://spark-jobs@synhns5trgtn.dfs.core.windows.net/raster_crop/src/crop.py",
             "conf": {
                 "spark.dynamicAllocation.enabled": "false",
                 "spark.dynamicAllocation.minExecutors": "1",
@@ -19,7 +19,7 @@
             "args": [],
             "jars": [],
             "files": [
-                "abfss://spark-jobs@synhnsede6nx.dfs.core.windows.net/raster_crop/src/utils.py"
+                "abfss://spark-jobs@synhns5trgtn.dfs.core.windows.net/raster_crop/src/utils.py"
             ],
             "driverMemory": "56g",
             "driverCores": 8,
